@@ -132,4 +132,4 @@ This is just a carrier for a simple Javascript routine to substitute the bundle-
 Live Server (https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) is used to host these local files.
 ## The result
 The result is a local HTML instance where the css files, html and liquid tags can be mocked:
-![Example](/img/git preview.jpg)
+![Example](https://github.com/MJBoes/power-apps-portals-mock/blob/main/img/GIT%20Preview.jpg)
