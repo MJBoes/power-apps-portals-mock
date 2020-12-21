@@ -1,0 +1,264 @@
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;padding: 0;border: 0;font-size: 100%;font: inherit;vertical-align: baseline;
+}
+ol, ul {list-style: none;}
+/* Fonts ----------------------------------------------------*/
+@font-face {
+  font-family: 'Bebas';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/BebasNeue-Regular.ttf');
+}
+
+/* GENERAL ------------------------------------------------------------*/
+body {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+	color: #444;
+}
+body a {
+	text-decoration: none;
+	transition: all 0.3s ease;
+}
+body a:hover, body a.active {
+	text-decoration: none;
+	color: #0078d7;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-family: Bebas, Helvetica, Arial, sans-serif;
+	line-height: 1.3em;
+	color: #0078d7;
+}
+h1 {
+	font-size: 48px;
+}
+h2 {
+	font-size: 36px;
+}
+h3 {
+	font-size: 30px;
+}
+h4 {
+	font-size: 24px;
+}
+h5 {
+	font-size: 18px;
+}
+h6 {
+	font-size: 14px;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-family: Bebas, Helvetica, Arial, sans-serif;
+	line-height: 1.3em;
+	color: #0078d7;
+}
+/*end general*/
+
+/*header*/
+header {
+	border-top: 7px #993300 solid;
+	background: transparent none;
+	min-height: 100px;
+}
+header #logo {
+	display: inline-block;
+}
+header #logo img {
+	display: block;
+	margin: 20px 0px 20px 5px;
+}
+header .tagline {
+	background: transparent url("../img/DTS-divider-tagline.png") no-repeat;
+	display: inline-block;
+	margin: 20px 0 0;
+	min-height: 75px;
+	padding: 10px 0 10px 10px;
+	vertical-align: top;
+}
+header .tagline h2 {
+	color: #0078d7;
+	font-size: 24px;
+	line-height: 1em;
+}
+header .tagline h2  span {
+	color: #444;
+}
+/*end header*/
+
+/* liquid search box */
+header .searchbox {
+	bottom: auto;
+	right: auto;
+	position: relative;
+	float: right;
+	margin-top: 60px;
+	text-align: left;
+	width: 260px;
+}
+header .input-group{
+	background: #e5e5e5 none;
+	border: 1px #c2c2c2 solid;
+	border-radius: 5px;
+	height: 38px;
+}
+header .form-control, header .form-control:focus{
+	background: #e5e5e5 none;
+	border:none;
+	box-shadow: none;
+}
+header #q input[type=text]{
+	border: 0px;
+	width: 200px;
+	height: 28px;
+	padding: 5px 10px;
+	font-size: 16px;
+	line-height: 1em;
+	color: #333;
+	background: transparent none;
+	display: inline-block;
+	vertical-align: top;
+}
+header .searchbox button, header .form-search .btn {
+	display: inline-block;
+	border:none;
+	height: 30px;
+	width: 22px;
+	vertical-align: top;
+	transition: all 0s ease;
+	background: transparent url('https://stpowerappsportals.blob.core.windows.net/assets/img/DTS-icon-search.png') no-repeat 0px 4px;
+}
+header .searchbox button:hover {
+	background-position: 0px -69px;
+	background-color: transparent;
+}
+.fa-search::before {
+    content: none;
+}
+/* nav */
+.navbar{
+	margin-bottom: 0px;
+}
+.navbar-inverse .navbar-nav>li>a, logon a{
+    position: relative;
+    display: block;
+	padding: 21px 20px;
+	line-height: 21px;
+	color:#fff;
+	font-size: 18px;
+}
+.navbar-toggle { position: relative; float: right; margin-right: 15px; padding: 9px 10px; margin-top: 8px; margin-bottom: 8px; background-color: #000; background-image: none; border: 1px solid transparent; border-radius: 0px; }
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #000;
+}
+/*footer*/
+footer .container{
+	background: #333 none;
+	color: #fff;
+	padding-top: 10px;
+}
+footer a, footer h4 {
+	color: #C9FFFF;
+}
+footer p{
+	margin-bottom: 15px;
+}
+footer .cols {
+	font-size: 14px;
+	margin: 30px 0px;
+}
+footer .cols > li.col {
+	float: left;
+	width: 32%;
+	padding-left:2%;
+}
+footer .cols > li.col:first-child {
+	padding-left:0%;
+}
+footer .cols h1, footer .cols h2, footer .cols h3, footer .cols h4, footer .cols h5, footer .cols h6 {
+	font-weight: normal;
+	margin-bottom: 20px;
+	padding-bottom: 0;
+	padding-top: 0;
+	text-align: center;
+}
+footer .contact li {
+	padding: 0px 0px 0px 40px;
+	margin-bottom: 15px;
+	background: transparent url('../img/DTS-icon-contact.png') no-repeat 0px 0px;
+	color: #C9FFFF;
+}
+footer .contact li.phone {
+	background-position: 7px 3px;
+}
+footer .contact li.email {
+	background-position: 7px -29px;
+}
+footer .contact li.linkedin {
+	background-position: 7px -61px;
+}
+footer .recent-post {
+	padding: 0px 0px 15px;
+}
+footer .recent-post > a {
+	display: block;
+	float: left;
+	padding-right: 10px;
+}
+footer .recent-post img {
+	width: 55px;
+	height: 55px;
+}
+footer {
+	padding-top: 10px;
+}
+footer .col-md-4 h1, footer .col-md-4 h2, footer .col-md-4 h3, footer .col-md-4 h4, footer .col-md-4 h5, footer .col-md-4 h6 {
+	font-weight: normal;
+	margin-bottom: 20px;
+	padding-bottom: 0;
+	padding-top: 0;
+	text-align: center;
+}
+/*end footer*/
+
+/*sections*/
+.section {
+	border-bottom: 1px solid #333333;
+	margin-bottom: 10px;
+}
+.section .heading {
+	margin-bottom: 10px;
+	text-align: left;
+}
+.section h2.heading  {
+	color: #444;
+	font-size: 30px;
+}
+.section h2.heading:before {
+	content: "//";
+	padding-right: 10px;
+}
+/*end sections*/
+
+@media screen and (max-width: 480px) {
+	header .tagline {
+		background: none repeat scroll 0 0 transparent;
+		display: none;
+		margin: 5px 0px;
+		min-height: 0;
+		padding: 0;
+		/*vertical-align: top;*/
+	}
+	header .tagline h2 {
+		font-size: 16px;
+	}
+	header .searchbox {
+		float: none;
+		margin: 10px 0px;
+		width: 100%;
+		position: relative;
+		bottom: auto;
+		right: auto;
+	}
+}

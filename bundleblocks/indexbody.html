@@ -1,0 +1,207 @@
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <div id="logo">
+                        <!--logo snippet-->
+                        <a href="/"><img
+                                src="https://stpowerappsportals.blob.core.windows.net/assets/img/DTS-sitelogo.png"
+                                alt="" /></a>
+                        <!--end logo snippet-->
+                    </div>
+                    <div class="tagline">
+                        <h2><span>Solutions</span> Subjects</h2>
+                        <h2><span>Applications</span> Services</h2>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="searchbox">
+                        <div id="searchInputBox">
+                            <!--search snippet-->
+                            <div bundle-html="indexsearch.html">{% include 'Search' search_id:'q' %}</div>
+                            <!--end search snippet-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- navigation -->
+    <div bundle-html="liquid-logon.html">
+        {% assign defaultlang = settings['LanguageLocale/Code'] | default: 'en-us' %}
+        {% assign homeurl = website.adx_partialurl %}
+        <div class="container">
+          <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" title="{{ snippets["Header/Toggle Navigation"] | default: resx['Toggle_Navigation'] | h }}" data-toggle="collapse" data-target="#navbar" aria-expanded="false" onclick="setHeight();">
+                <span class="sr-only">{{ snippets["Header/Toggle Navigation"] | default: resx['Toggle_Navigation'] | h }}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              {% assign primary_nav = weblinks["Default"] %}
+              {% if primary_nav %}
+              <div class="menu-bar {% if primary_nav.editable %}xrm-entity xrm-editable-adx_weblinkset{% endif %}" data-weblinks-maxdepth="2">
+                <ul class="nav navbar-nav weblinks" role="menubar">
+                  {% for link in primary_nav.weblinks %}
+                  {% unless forloop.first %}
+                  <li class="divider-vertical" aria-hidden="true"></li>
+                  {% endunless %}
+                  {% if link.display_page_child_links %}
+                  {% if link.url != null %}
+                  {% assign sublinks = sitemap[link.url].children %}
+                  {% endif %}
+                  {% else %}
+                  {% assign sublinks = link.weblinks %}
+                  {% endif %}
+                  <li role="none" class="weblink {% if sublinks.size > 0 %} dropdown{% endif %}">
+                    <a role="menuitem" aria-label="{{ link.name | escape }}" {% if sublinks.size > 0 -%} href="#" class="dropdown-toggle" data-toggle="dropdown" {%- else -%} href="{{ link.url | escape }}" {%- endif -%} {%- if link.Open_In_New_Window %} target="_blank" {% endif -%} {%- if link.nofollow %} rel="nofollow" {% endif -%} {%- if link.tooltip %} title="{{ link.tooltip | escape }}" {% endif %}>
+                      {%- if link.image -%}
+                      {%- if link.image.url  -%}
+                      {%- if link.image.url.first == '.' -%}
+                      <span class="{{ link.image.url | split:'.' | join }}" aria-hidden="true"></span>
+                      {%- endif -%}
+                      {%- else -%}
+                      <img src="{{ link.image.url | escape }}" alt="{{ link.image.alternate_text | default:link.tooltip | escape }}" {% if link.image.width %}width="{{ link.image.width | escape }}" {% endif %} {% if link.image.height %}height="{{ link.image.height | escape }}" {% endif %} />
+                      {%- endif -%}
+                      {%- endif -%}
+                      {%- unless link.display_image_only -%}
+                      {{ link.name | escape }}
+                      {%- endunless -%}
+                      {%- if sublinks.size > 0 -%}
+                      <span class="caret"></span>
+                      {%- endif -%}
+                    </a>
+                    {% if sublinks.size > 0 %}
+                    <ul class="dropdown-menu" role="menu">
+                      {% if link.name %}
+                      <li role="none">
+                        <a role="menuitem" aria-label="{{ link.name | escape }}" href="{{ link.url }}" {% if link.Open_In_New_Window %} target="_blank" {% endif %} {% if link.nofollow %}rel="nofollow" {% endif %} {% if link.tooltip %}title="{{ link.tooltip | escape }}" {% endif %}>{{ link.name | escape }}</a>
+                      </li>
+                      <div class="divider"></div>
+                      {% endif %}
+                      {% for sublink in sublinks %}
+                      <li role="none">
+                        <a role="menuitem" aria-label="{{ sublink.name | default:sublink.title | escape }}" href="{{ sublink.url }}" {% if sublink.Open_In_New_Window %} target="_blank" {% endif %} {% if sublink.nofollow %}rel="nofollow" {% endif %} {% if sublink.tooltip %}title="{{ sublink.tooltip | escape }}" {% endif %}>
+                          {{ sublink.name | default:sublink.title | escape }}
+                        </a>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                    {% endif %}
+                  </li>
+                  {% endfor %}
+                  <li class="divider-vertical" aria-hidden="true"></li>
+                  <li>
+                    <logon>
+                      <ul>
+                        {% if user %}
+                        <li class="dropdown" role="none">
+                          <a href="#" class="dropdown-toggle" title="{{ user.fullname | escape }}" data-toggle="dropdown" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                            <span class="username">{{ user.fullname | escape }}</span>
+                            <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu" role="menu">
+                            {% assign show_profile_nav = settings["Header/ShowAllProfileNavigationLinks"] | boolean | default:true %}
+                            {% if show_profile_nav %}
+                            {% assign profile_nav = weblinks["Profile Navigation"] %}
+                            {% if profile_nav %}
+                            {% for link in profile_nav.weblinks %}
+                            <li role="none">
+                              <a role="menuitem" aria-label="{{ link.name | escape }}" href="{{ link.url | escape }}" title="{{ link.name | escape }}">{{ link.name | escape }}</a>
+                            </li>
+                            {% endfor %}
+                            {% endif %}
+                            {% else %}
+                            <li role="none"><a role="menuitem" aria-label="{{ snippets["Profile Link Text"] | default:resx["Profile_Text"] | escape }}" href="{{ sitemarkers['Profile'].url | escape }}">{{ snippets["Profile Link Text"] | default:resx["Profile_Text"] | escape }}</a></li>
+                            {% endif %}
+                            <li class="divider" role="separator" aria-hidden="true"></li>
+                            <li role="none">
+                              <a role="menuitem" aria-label="{{ snippets["links/logout"] | default:resx["Sign_Out"] | escape }}" href="{% if homeurl%}/{{ homeurl }}{% endif %}{{ website.sign_out_url_substitution }}" title="{{ snippets["links/logout"] | default:resx["Sign_Out"] | escape }}">
+                                {{ snippets["links/logout"] | default:resx["Sign_Out"] | escape }}
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+                        {% else %}
+                        <li role="none">
+                          <a role="menuitem" aria-label="{{ snippets["links/login"] | default:resx["Sign_In"] | escape }}" href="{% if homeurl%}/{{ homeurl }}{% endif %}{{ website.sign_in_url_substitution }}">
+                            {{ snippets["links/login"] | default:resx["Sign_In"] | escape }}
+                          </a>
+                        </li>
+                        {% endif %}
+                      </ul>
+                    </logon>
+                  </li>
+                </ul>
+                {% editable primary_nav %}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- main -->
+    <div role="main" id="main">
+        <div class="container">
+            <div class="page-copy">
+                <div bundle-html="page-start.html">{% editable page 'adx_copy' type: 'html', liquid: true %}</div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <!--columns-->
+                <div class="col-md-4 col-sm-4">
+                    <h4>ABOUT THIS SITE</h4>
+                    <p>This is a test / development site to experiment with Power Apps Portals and related technologies
+                        like Liquid. Whether / how long this is valid for a M365 Business Standard licence is not clear.
+                        Still, while it works, it also acts as the public facing site for my Desktop Services tenant.
+                    </p>
+                    <ul class="contact">
+                        <li class="phone">+31 * ** ** ** **</li>
+                        <li class="email"><a
+                                href="mailto:marcboes@desktopservices.onmicrosoft.com">marcboes@desktopservices.onmicrosoft.com</a>
+                        </li>
+                        <li class="linkedin"><a href="https://www.linkedin.com/in/marcboes/" target="_blank">Marc Boes</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 col-sm-4">
+                    <div id="tweets" class="footer-col tweet">
+                      <h4>LINKS</h4>
+                      <ul class="news">
+                        <li><a href="https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging" target="_blank">Naming strategy for Azure</a></li>
+                        <li><a href="https://tangocode.com/2019/09/create-node-js-azure-functions-with-vs-code/" target="_blank">Create Node.js Azure Functions</a></li>
+                        <li>&nbsp;</li>
+                      </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4">
+                    <h4>RECENT ARTICLES</h4>
+                    <div class="recent-post cf">
+                        <a href="#" class="thumb"><img src="https://stpowerappsportals.blob.core.windows.net/assets/img/pages/20201217blog-vscode.png" alt="Post" /></a>
+                        <div class="post-head">
+                            <a href="https://desktopservices.powerappsportals.com/Blog/blog-20201217/">Design Liquid
+                                pages in VS Code</a><span> December 13, 2020</span>
+                        </div>
+                    </div>
+                    <div class="recent-post cf">
+                        <a href="#" class="thumb"><img src="https://stpowerappsportals.blob.core.windows.net/assets/img/pages/whiskypage.png" alt="Post" /></a>
+                        <div class="post-head">
+                            <a href="https://desktopservices.powerappsportals.com/solution-whisky/">DTS Whiskybase List (Liquid Example)</a><span> December 15, 2020</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- ENDS columns -->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+    </footer>
+</body>

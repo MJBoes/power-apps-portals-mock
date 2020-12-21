@@ -1,0 +1,32 @@
+<div class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; text-align: left; min-height: 100px;">
+    <div class="container" style="display: flex; flex-wrap: wrap;">
+      <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+        <h1>Power Apps Portals design with VS Code</h1>
+        <h2>Summary</h2>
+        <p>As Power Apps Portals leverage server side liquid technology, it is not straightforward to use client side development techniques. As a citizen developer I treat the server side part as a "given". Still, designing pages in the Power Apps Platform interface is not well supported and debugging is cumbersome.<br>
+          This post describes a way to design the pages in Visual Studio code including the server side part by cheating a bit.<br>
+          A little bit of understanding of the CMS side of Power Apps Portals is needed, but quite fast the particularities can be ignored and regular page design can take place, so that PWA techniques can be used.<br>
+          <br>
+          The cheating part is to create a bundler page in VS Code which combines component pages to mimick the target Power Apps Portal platform. In these pages the liquid tags are placed inside a custom tag.</p>
+        <p>{{ '&lt;div id="searchInputBox"&gt;' | escape }}<br>
+          {{ '&lt;!--search snippet--&gt;' | escape }}<br>
+          {{ '&lt;div bundle-html="indexsearch.html"&gt;' | escape }}</p>
+        <p>{% raw %}</p>
+        <p>{% include 'Search' search_id:'q' %}</p>
+        <p>{% endraw %}</p>
+        <p>{{ '&lt;/div&gt;' | escape }}<br>
+          {{ '&lt;!--end search snippet--&gt;' | escape }}<br>
+          {{ '&lt;/div&gt;'| escape }}</p>
+        <div>The bundle page replaces&nbsp;bundle-html tags with a piece of HTML copies / pasted from the portal. In the example above, the DIV with the liquid code is replaced with the HTML contents of indexsearch.html for local design. The same html renders the search control for the server when run inside a Power Apps portal page.</div>
+        <p>The indexbody.html is used to update a custom Web Template and the indexhead.html is kept in sync with a content snippet Head/Bottom. The result is that the server side part on Power Apps Portal can be designed in local VS Code.</p>
+        <h2>Details</h2>
+        <p>Including code on Power Apps portal pages prove to be quite a drag. See my github repo instead. Some general tips and pointers:</p>
+        <ul style="list-style:square;">
+          <li>Storing assets on Azure<br>
+            When possible I put&nbsp;assets (images, fonts, scripts) on an Azure storage account. It costs practically nothing and is nicer that uploading blobs to the Power Apps Dataverse. However, you need create a CORS entry on Azure to make it trusted in some (fonts for example) cases. In my particular case GET for all headers is accepted by the storage account from origin&nbsp;https://desktopservices.powerappsportals.com and from 127.0.0.0.1:5500 (my local hosted Live server).</li>
+          <li>Most manifest items, like Android icons, I did upload to the Dataverse. I have not tried whether a different / Azure location would work.</li>
+          <li>My JavaScript development is done separate from the bundle approach. By building different html mock parts, I did not get the loading of script files in the building blocks working right.</li>
+        </ul>
+      </div>
+    </div>
+  </div>

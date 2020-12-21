@@ -26,7 +26,7 @@ Place the files in the root directory of your website.
 * favicon.ico
 * site.webmanifest
 ## Header
-In the bundleblocks folder, create an HTML file with the contents of the header tag.
+In the bundleblocks folder, create an HTML file with the contents of the head section.
 The content of this file will end up in a Header/Bottom content snippet in the Power Apps Portal.
 ```html
 <head>
@@ -52,3 +52,81 @@ The content of this file will end up in a Header/Bottom content snippet in the P
 </head>
 ```
 The assets (scripts, icons etc.) are hosted on Azure. This is a choice, as these items can be added as web resources in the Dataverse as well. Updating the files in the Dataverse takes more actions though, so here an Azure storage account is used.
+## Body
+Also in the bundleblocks folder, a HTML file is created for the body. The contents of this file will end up in a custom web template in the dataverse. Creation and sync of this content is no more fancy that a copy / paste action in the Portal Management App in Power Apps.
+```html
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <div id="logo">
+                        <!--logo snippet-->
+                        <a href="/"><img
+                                src="https://stpowerappsportals.blob.core.windows.net/assets/img/DTS-sitelogo.png"
+                                alt="" /></a>
+                        <!--end logo snippet-->
+                    </div>
+                    <div class="tagline">
+                        <h2><span>Solutions</span> Subjects</h2>
+                        <h2><span>Applications</span> Services</h2>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="searchbox">
+                        <div id="searchInputBox">
+                            <!--search snippet-->
+                            <div bundle-html="indexsearch.html">{% include 'Search' search_id:'q' %}</div>
+                            <!--end search snippet-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        ...
+</body>
+```
+Note here the <div bundle-html="indexsearch.html"> tag. What will happen, is that this code renders a liquid tag in Power Apps Portals, but locally it will be replaced with an HTML file. This way the design can be created localy and the resulting css and html works on Power Apps Portals. The content of these bundle-html files is copied from the generated HTML from these liquid tags.
+## Bundler
+The html blocks are combined in bundle.html in the root of the project.
+```html
+<html>
+    <head bundle-html="indexhead.html">
+    </head>
+    <body bundle-html="indexbody.html">
+    </body>
+</html>
+<script>
+    function BundleHTML() {
+        var z, i, elmnt, file, xhttp;
+        /* Loop through a collection of all HTML elements: */
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            /*search for elements with a certain atrribute:*/
+            file = elmnt.getAttribute("bundle-html");
+            if (file) {
+                /* Make an HTTP request using the attribute value as the file name: */
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+                        if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+                        /* Remove the attribute, and call this function once more: */
+                        elmnt.removeAttribute("bundle-html");
+                        BundleHTML();
+                    }
+                }
+                xhttp.open("GET", ("bundleblocks/"+file), true);
+                xhttp.send();
+                /* Exit the function: */
+                return;
+            }
+        }
+    }
+    BundleHTML();
+</script>
+```
+This is just a carrier for a simple Javascript routine to substitute the bundle-html references with the HTML files.
+## Running the solution
+Live Server (https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) is used to host these local files.
