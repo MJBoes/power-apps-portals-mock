@@ -11,11 +11,11 @@ Log of the configurations and files created:
 1. In terminal, git clone https://github.com/MJBoes/power-apps-portals-mock.git "D:\Data\Desktop Services\Solutions (Desktop Services) - Documents\2020\20201221PowerAppsPortalMock"
 1. Commit changes in readme.md
 ## Create folder structure
-\bundleblocks
-\css
-\fonts
-\img
-\js
+* bundleblocks
+* css
+* fonts
+* img
+* js
 ## Create favicon_package (https://favicon.io/favicon-converter/)
 Place the files in the root directory of your website.
 * android-chrome-192x192.png
@@ -86,7 +86,7 @@ Also in the bundleblocks folder, a HTML file is created for the body. The conten
         ...
 </body>
 ```
-Note here the <div bundle-html="indexsearch.html"> tag. What will happen, is that this code renders a liquid tag in Power Apps Portals, but locally it will be replaced with an HTML file. This way the design can be created localy and the resulting css and html works on Power Apps Portals. The content of these bundle-html files is copied from the generated HTML from these liquid tags.
+Note here the div bundle-html="indexsearch.html" tag. What will happen, is that this code renders a liquid tag in Power Apps Portals, but locally it will be replaced with an HTML file. This way the design can be created localy and the resulting css and html works on Power Apps Portals. The content of these bundle-html files is copied from the generated HTML from these liquid tags.
 ## Bundler
 The html blocks are combined in bundle.html in the root of the project.
 ```html
@@ -130,3 +130,6 @@ The html blocks are combined in bundle.html in the root of the project.
 This is just a carrier for a simple Javascript routine to substitute the bundle-html references with the HTML files.
 ## Running the solution
 Live Server (https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) is used to host these local files.
+## The result
+The result is a local HTML instance where the css files, html and liquid tags can be mocked:
+![Example](/img/git preview.jpg)
